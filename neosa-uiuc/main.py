@@ -33,13 +33,20 @@ class MapHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/map.html')
         self.response.out.write(template.render())
 
+class CalendarHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/calendar.html')
+        self.response.out.write(template.render())
+
 class AboutHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/about.html')
         self.response.out.write(template.render())
 
+
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
+    ('/calendar', CalendarHandler),
     ('/about', AboutHandler),
     ('/.*', MainHandler)
 ], debug=True)
