@@ -3,12 +3,47 @@
 <html>
   <head>
     <title>NEOSA</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="stylesheets/index_bootstrap.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="js/bootstrap.js"></script>
   </head>
+
   <body>
-    <h1>Landing page</h1>
-    <a href="/map">Map</a>
-    <a href="/about">About</a>
-    <a href="/calendar">Calendar</a>
+    <div>
+      <ul class="navbar">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/map">Map</a></li>
+        <li><a href="/calendar">Calendar</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="container-outer">
+      <div class="container-inner">
+        <!-- <h1>Hey ü</h1> -->
+        <img id="logo" src="/images/HeyU.jpg">
+        <h2>A new way to study with your friends.</h2>
+      </div>
+    </div>
+
+    <div class="textbox">
+      <form action="demo_form.asp">
+        <input type="text" name="Uname" placeholder="Username"><br>
+        <input type="text" name="Pname" placeholder="Password"><br>
+      </form>
+    </div>
+
+    <div class="login">
+      <div class="login_button">
+        <button type="button">Login</button>
+        <button type="button"><a href="signup.html">Sign Up</a></button>
+        <button type="button">Sign in with Facebook</button>
+        <button type="button">Sign in with Google</button>
+      </div>
+    </div>
   </body>
 
 </html>

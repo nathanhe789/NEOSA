@@ -1,0 +1,30 @@
+.navbar{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: inline;
+    text-align: right;
+}
+.navbar li{
+  float: left;
+}
+.navbar a{
+  display: block;
+  width: 60px;
+}
+
+.container-inner{
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  font-size: 56px;
+  align: center;
+}
+.login_button{
+  margin: auto;
+  padding: 0;
+  text-align: center;
+}
+.textbox{
+  text-align: center;
+}
