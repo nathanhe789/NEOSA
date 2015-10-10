@@ -1,0 +1,17 @@
+<author Joe Tan>
+
+This file will contain all things that must be done
+
+If you are working on something on the list, add your name after it, then push it to github right away, so we don't have everyone doing the same task.
+With that said, make sure to constantly PULL your code, so you know who is working on what!
+
+For now most of the following should be completed by Tuesday lecture:
+
+about.html will needs styling
+someone should read up on how to sync someone else's Google Calendar
+the map needs a bit of logic, I need someone to make it display your current location, and updates in real time.
+Someone needs to create and contact page, the html file plus styling
+
+
+if you think I am missing anything, simply add a new task to this file.
+Once again make sure you are pulling constantly to ensure the most up to date file.
