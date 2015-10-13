@@ -48,11 +48,17 @@ class SignUpHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/signup.html')
         self.response.out.write(template.render())
 
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/login.html')
+        self.response.out.write(template.render())
+
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
     ('/calendar', CalendarHandler),
     ('/about', AboutHandler),
     ('/signup', SignUpHandler),
+    ('/login', LoginHandler),
     ('/.*', MainHandler)
 ], debug=True)
