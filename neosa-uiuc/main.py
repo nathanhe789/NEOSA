@@ -18,10 +18,29 @@ import webapp2
 import jinja2
 import json
 import os
+from google.appengine.ext import ndb
+from google.appengine.api import users
 import logging
 
 jinja_environment = jinja2.Environment(
   loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
+
+class UserModel(ndb.Model):
+    username = ndb.StringProperty(required = True)
+    password = ndb.StringProperty(required = True)
+    first_name = ndb.StringProperty(required = True)
+    last_name = ndb.StringProperty(required = True)
+    email_address = ndb.StringProperty(required = True)
+
+
+def createUser(username, password, first_name, last_name, email_address):
+    user = UserModel(username = username, password = password, first_name = first_name, last_name =last_name, email_address = email_address)
+    user.put()
+
+class Test(webapp2.RequestHandler):
+    def get(self):
+        users = UserModel.query().fetch()
+        self.response.out.write(users)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -47,6 +66,14 @@ class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/signup.html')
         self.response.out.write(template.render())
+    def post(self):
+        first_name = self.request.get("first_name")
+        last_name = self.request.get("last_name")
+        email_address = self.request.get("email_address")
+        username = self.request.get("username")
+        password = self.request.get("password")
+        createUser(username, password, first_name, last_name, email_address)
+
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
@@ -60,5 +87,6 @@ app = webapp2.WSGIApplication([
     ('/about', AboutHandler),
     ('/signup', SignUpHandler),
     ('/login', LoginHandler),
+    ('/test', Test),
     ('/.*', MainHandler)
 ], debug=True)
