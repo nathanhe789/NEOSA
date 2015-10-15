@@ -31,10 +31,14 @@ class UserModel(ndb.Model):
     first_name = ndb.StringProperty(required = True)
     last_name = ndb.StringProperty(required = True)
     email_address = ndb.StringProperty(required = True)
+    # calendar = ndb.StructuredProperty(repeated = True)
 
-def getKey(username, password):
-    user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(1, keys_only=True)[0]
-    key = user.id()
+def getUser(username, password):
+    user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(keys_only=True)
+    if len(user) > 0:
+        key = user[0]
+    else:
+        return "User Not Found"
     return key
 
 def createUser(username, password, first_name, last_name, email_address):
@@ -43,10 +47,9 @@ def createUser(username, password, first_name, last_name, email_address):
 
 class Test(webapp2.RequestHandler):
     def get(self):
-        # users = UserModel.query().fetch()
-        # self.response.out.write(users)
-        user = loginUser('foo','bar')
-        self.response.out.write(user)
+        user = getUser('foo','bar')
+        info = user.get()
+        self.response.out.write(info)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -80,7 +83,6 @@ class SignUpHandler(webapp2.RequestHandler):
         password = self.request.get("password")
         createUser(username, password, first_name, last_name, email_address)
 
-
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/login.html')
@@ -88,10 +90,12 @@ class LoginHandler(webapp2.RequestHandler):
     def post(self):
         username = self.request.get("username")
         password = self.request.get("password")
-        user = loginUser(username,password)
-        self.response.out.write(user)
+        user = getUser(username,password)
+        if user is not 'User Not Found':
+            user_info = user.get()
+            self.response.out.write(user_info)
 
-
+            # self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
