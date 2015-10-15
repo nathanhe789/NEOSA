@@ -32,6 +32,10 @@ class UserModel(ndb.Model):
     last_name = ndb.StringProperty(required = True)
     email_address = ndb.StringProperty(required = True)
 
+def getKey(username, password):
+    user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(1, keys_only=True)[0]
+    key = user.id()
+    return key
 
 def createUser(username, password, first_name, last_name, email_address):
     user = UserModel(username = username, password = password, first_name = first_name, last_name =last_name, email_address = email_address)
@@ -39,8 +43,10 @@ def createUser(username, password, first_name, last_name, email_address):
 
 class Test(webapp2.RequestHandler):
     def get(self):
-        users = UserModel.query().fetch()
-        self.response.out.write(users)
+        # users = UserModel.query().fetch()
+        # self.response.out.write(users)
+        user = loginUser('foo','bar')
+        self.response.out.write(user)
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -79,6 +85,12 @@ class LoginHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/login.html')
         self.response.out.write(template.render())
+    def post(self):
+        username = self.request.get("username")
+        password = self.request.get("password")
+        user = loginUser(username,password)
+        self.response.out.write(user)
+
 
 
 app = webapp2.WSGIApplication([
