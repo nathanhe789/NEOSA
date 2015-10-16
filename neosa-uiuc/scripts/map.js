@@ -29,7 +29,15 @@ function getUserLocation() {
      * REPLACE setInterval with HTML5 watchPosition. Should be a
      * a cleaner implementation of what we want.
      */
-    navigator.geolocation.watchPosition(setLocation);
+     var options = {
+       enableHighAccuracy: true,
+       timeout: 5000,
+       maximumAge: 0
+     }
+     function error(err) {
+       console.warn('ERROR(' + err.code + '): ' + err.message);
+     }
+    navigator.geolocation.watchPosition(setLocation, error, options);
   }
   else
     document.getElementById("locationData").innerHTML = "Sorry - your browser doesn't support geolocation!";
