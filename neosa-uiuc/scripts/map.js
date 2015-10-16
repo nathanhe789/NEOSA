@@ -29,17 +29,32 @@ function getUserLocation() {
 function setLocation(position) {
   lat = position.coords.latitude
   long = position.coords.longitude;
+  positionData = {lat: lat, lng: long};
   current_location = new google.maps.LatLng(lat,long);
-  map.setCenter({lat: lat, lng: long})
+  map.setCenter(positionData)
   //If the marker has already been created
   if(marker != null){
     //update the position
-    updateMarker({lat: lat, lng: long});
+    updateMarker(positionData);
   }
   else{
     //otherwise, create a new marker
-    createMarker({lat: lat, lng: long});
+    createMarker(positionData);
   }
+  //POST lat and long to backend
+  jQuery.ajax({
+    type: 'POST',
+    url: "/map",
+    data: positionData,
+    success:
+    function(data){
+      alert(data);
+    },
+    error:
+    function(data){
+      alert(data);
+    }
+  });
 }
 
 function ClearMarker() {
