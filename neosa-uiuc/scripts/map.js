@@ -17,11 +17,19 @@ function initialize() {
 
 function getUserLocation() {
   if (navigator.geolocation){
+    /**
     //Repeatedly makes calls to getCurrentPosition and sets that on the map.
     //Interval is 200ms
     setInterval(function () {
           navigator.geolocation.getCurrentPosition(setLocation);
     }, interval);
+    **/
+
+    /*
+     * REPLACE setInterval with HTML5 watchPosition. Should be a
+     * a cleaner implementation of what we want.
+     */
+    navigator.geolocation.watchPosition(setLocation);
   }
   else
     document.getElementById("locationData").innerHTML = "Sorry - your browser doesn't support geolocation!";
