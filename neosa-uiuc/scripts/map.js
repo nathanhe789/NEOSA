@@ -4,7 +4,7 @@ var current_location;
 var marker;
 
 //Location update interval in milliseconds.
-var interval = 200;
+var interval = 10000;
 
 function initialize() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -45,6 +45,7 @@ function setLocation(position) {
   jQuery.ajax({
     type: 'POST',
     url: "/map",
+    name: "latlng",
     data: positionData,
     success:
     function(data){

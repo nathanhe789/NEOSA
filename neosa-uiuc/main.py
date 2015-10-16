@@ -25,13 +25,15 @@ import logging
 jinja_environment = jinja2.Environment(
   loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
+current_user = ""
 class UserModel(ndb.Model):
     username = ndb.StringProperty(required = True)
     password = ndb.StringProperty(required = True)
     first_name = ndb.StringProperty(required = True)
     last_name = ndb.StringProperty(required = True)
     email_address = ndb.StringProperty(required = True)
-    # calendar = ndb.StructuredProperty(repeated = True)
+    latlng = ndb.JsonProperty()
+    # calendar = ndb.PickleProperty(repeated = True)
 
 def getUser(username, password):
     user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(keys_only=True)
@@ -41,7 +43,7 @@ def getUser(username, password):
         return "User Not Found"
     return key
 
-def createUser(username, password, first_name, last_name, email_address):
+def createUser(username, password, first_name, last_name, email_address,location):
     user = UserModel(username = username, password = password, first_name = first_name, last_name =last_name, email_address = email_address)
     user.put()
 
@@ -49,6 +51,8 @@ class Test(webapp2.RequestHandler):
     def get(self):
         user = getUser('foo','bar')
         info = user.get()
+        info.email_address = "Joe@joe"
+        info.put()
         self.response.out.write(info)
 
 class MainHandler(webapp2.RequestHandler):
@@ -60,6 +64,11 @@ class MapHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/map.html')
         self.response.out.write(template.render())
+    def post(self):
+        latlng = self.request.get("latlng")
+        info = current_user.get()
+        info.latlng = latlng
+        info.put()
 
 class CalendarHandler(webapp2.RequestHandler):
     def get(self):
@@ -92,10 +101,8 @@ class LoginHandler(webapp2.RequestHandler):
         password = self.request.get("password")
         user = getUser(username,password)
         if user is not 'User Not Found':
-            user_info = user.get()
-            self.response.out.write(user_info)
-
-            # self.redirect('/')
+            current_user = user
+            self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
