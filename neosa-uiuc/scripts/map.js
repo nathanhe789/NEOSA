@@ -30,9 +30,7 @@ function getUserLocation() {
      * a cleaner implementation of what we want.
      */
      var options = {
-       enableHighAccuracy: true,
-       timeout: 5000,
-       maximumAge: 0
+       enableHighAccuracy: true
      }
      function error(err) {
        console.warn('ERROR(' + err.code + '): ' + err.message);
