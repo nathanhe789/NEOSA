@@ -15,6 +15,15 @@ function initialize() {
   getUserLocation();
 }
 
+function getAllUsersLatLng(){
+  var latlng = $('#latlng').text();
+  // console.log(latlng);
+  latlng = JSON.parse(latlng);
+  console.log(latlng);
+  return latlng;
+
+}
+
 function getUserLocation() {
   if (navigator.geolocation){
     //Repeatedly makes calls to getCurrentPosition and sets that on the map.
@@ -28,6 +37,7 @@ function getUserLocation() {
 }
 
 function setLocation(position) {
+
   lat = position.coords.latitude
   long = position.coords.longitude;
   positionData = {lat: lat, lng: long};
