@@ -75,6 +75,13 @@ class LoginHandler(webapp2.RequestHandler):
     def get(self):
         self.redirect(users.create_login_url('/'))
 
+
+class ProfilePageHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/profilepage.html')
+        self.response.out.write(template.render())
+
+
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/signup.html')
@@ -94,6 +101,7 @@ app = webapp2.WSGIApplication([
     ('/map', MapHandler),
     ('/calendar', CalendarHandler),
     ('/about', AboutHandler),
+    ('/profilepage', ProfilePageHandler),
     ('/signup', SignUpHandler),
     ('/login', LoginHandler),
     ('/test', Test),
