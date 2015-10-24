@@ -17,57 +17,49 @@
 import webapp2
 import jinja2
 import json
-import urllib2
 import os
 import logging
+from google.appengine.api import users
 from neosa import *
 
 jinja_environment = jinja2.Environment(
   loader=jinja2.FileSystemLoader(os.path.dirname(__file__)))
 
-current_user = getUser('sss','sss')
 class Test(webapp2.RequestHandler):
     def get(self):
-        # auth_handler = urllib2.HTTPBasicAuthHandler()
-        # auth_handler.add_password(realm='PDQ Application',
-        #                           uri='https://mahler:8092/site-updates.py',
-        #                           user='klem',
-        #                           passwd='kadidd!ehopper')
-        # opener = urllib2.build_opener(auth_handler)
-        # # ...and install it globally so it can be used with urlopen.
-        # urllib2.install_opener(opener)
-        # urllib2.urlopen('http://www.neosa-uiuc.appspot.com/login')
-        # opener = urllib2.build_opener()
-        # opener.addheaders.append(('Cookie', 'cookiename=cookievalue'))
-        # # f = opener.open("http://www.python.org/")
-        # # info = user.get()
-        # # info.email_address = "Joe@joe"
-        # # info.put()
-        # # self.response.out.write(info)
-        # # template = jinja_environment.get_template('templates/DO_NOT_DELETE.html')
-        # # template = jinja_environment.get_template('templates/DO_NOT_DELETE.html')
-        #
         self.response.out.write(getAllUsersLatLng())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/index.html')
-        self.response.out.write(template.render())
+        current_user = {'current_user':'Stranger'}
+        request = self.request.get('logout_button')
+        if request:
+            self.redirect(users.create_logout_url('/'))
+        user = getCurrentUser()
+        if user:
+            first_name = user.get().first_name
+            current_user['current_user'] = first_name
+            self.response.out.write(template.render(current_user))
+        else:
+            self.response.out.write(template.render(current_user))
 
 class MapHandler(webapp2.RequestHandler):
     def get(self):
-        if current_user is 'none':
-            self.redirect('/login')
+        user = users.get_current_user()
         template = jinja_environment.get_template('templates/map.html')
-        latlng = {'latlng':json.dumps(getAllUsersLatLng())}
-        self.response.out.write(template.render(latlng))
+        if user:
+            latlng = {'latlng':json.dumps(getAllUsersLatLng())}
+            self.response.out.write(template.render(latlng))
+        else:
+            self.redirect('/login')
     def post(self):
-        logging.info(current_user)
-        if current_user is not 'none':
+        user = users.get_current_user()
+        if user:
             latlng = self.request.body
-            info = current_user.get()
-            info.latlng = latlng
-            info.put()
+            user = getCurrentUser().get()
+            user.latlng = latlng
+            user.put()
 
 class CalendarHandler(webapp2.RequestHandler):
     def get(self):
@@ -79,31 +71,24 @@ class AboutHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('templates/about.html')
         self.response.out.write(template.render())
 
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        self.redirect(users.create_login_url('/'))
+
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/signup.html')
         self.response.out.write(template.render())
     def post(self):
+        user = users.get_current_user()
+        user_id = user.user_id()
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
-        email_address = self.request.get("email_address")
+        email_address = user.email()
         username = self.request.get("username")
         password = self.request.get("password")
-        createUser(username, password, first_name, last_name, email_address)
+        createUser(user_id,username, password, first_name, last_name, email_address)
 
-class LoginHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/login.html')
-        self.response.out.write(template.render())
-    def post(self):
-        username = self.request.get("username")
-        password = self.request.get("password")
-        user = getUser(username,password)
-        current_user = user
-        if user is not 'User Not Found':
-            current_user = user
-            logging.info(current_user)
-            self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
