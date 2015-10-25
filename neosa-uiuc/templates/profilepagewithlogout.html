@@ -1,3 +1,4 @@
+<!-- author Joe Tan -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Hey Ü | Profile</title>
+    <title>Hey Ü</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
@@ -46,24 +47,30 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="index.html">Hey Ü</a>
+                <a class="navbar-brand page-scroll" href="#page-top">Welcome</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <!-- <li>
-                        <a class="page-scroll" href="/login"></a>
+                        <a class="page-scroll" href="/login">Hello</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/signup"></a>
+                        <a class="page-scroll" href="#about">World</a>
                     </li> -->
-                    <!-- <li>
-                        <a class="page-scroll" href="/about">About</a>
+                    <li>
+                        <a class="page-scroll" href="#portfolio">About</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="/contact">Contact</a>
-                    </li> -->
+                        <a class="page-scroll" href="#contact">Contact</a>
+                    </li>
+                    <li>
+                      <a class="page-scroll" href="/">Logout</a>
+                      <!-- <form action="logout">
+                        <input type="submit" value="Logout" name="logout_button">
+                      </form> -->
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -74,33 +81,22 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <h1>What do you want to work on today?</h1>
+                <h1>Hey {{current_user}}</h1>
                 <hr>
-                <p></p>
-                <!-- <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a> -->
-                <select>
-                  <option value="math">Math</option>
-                  <option value="physics">Physics</option>
-                  <option value="chemistry">Chemistry</option>
-                  <option value="biology">Biology</option>
-                  <option value="computer_science">Computer Science</option>
-                  <option value="english">English</option>
-                  <option value="arts">Arts</option>
-                  <option value="other">Other</option>
-                  <button onclick="myFunction()">Click me</button>
-                </select>
+                <p>Find Your Friends</p>
+                <a href="#about" class="btn btn-default btn-xl page-scroll">Find Out More</a>
             </div>
         </div>
     </header>
 
-    <!-- <section class="bg-primary" id="about">
+    <section class="bg-primary" id="about">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Already have an account?</h2>
                     <hr class="light">
                     <p class="text-faded">Just simply login to our app and immediately start using it with your friends!</p>
-                    <a href="#" class="btn btn-default btn-xl">Login</a>
+                    <a href="/login" class="btn btn-default btn-xl">Login</a>
                 </div>
             </div>
         </div>
@@ -111,8 +107,10 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Dont have an account?</h2>
-                    <a href="signup.html" class="btn btn-default btn-xl">Sign Up</a>
                     <hr class="primary">
+                    <a href="/signup" class="btn btn-primary btn-xl">Sign Up</a>
+                    <br>
+
                 </div>
             </div>
         </div>
@@ -149,20 +147,40 @@
             </div>
         </div>
     </section>
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Our Story</h2>
+                    <hr class="light">
+                    <p class="text-faded">Hey Ü is an app that lets you and your friends/classmates study more efficiently. Instead of wondering when your friends are done with classes or if they are busy, let Hey Ü find the most convenient time for both of you to study together. Never deal with the hassle of constantly finding a study session with your friends ever again.
 
-    <section class="no-padding" id="portfolio">
+                      All you have to do is create an account and import your schedule from Google Calendar. Then, you can instantly find nearby friends to start studying with.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="portfolio">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <h2 class="section-heading">About Our Creators</h2>
+                      <p></p>
+                      <hr class="primary">
+
+    <section class="no-padding">
         <div class="container-fluid">
             <div class="row no-gutter">
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/1.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/1.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category1
                                 </div>
                                 <div class="project-name">
-                                    Project Name1
+                                    Joe
                                 </div>
                             </div>
                         </div>
@@ -170,14 +188,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/2.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/2.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category2
                                 </div>
                                 <div class="project-name">
-                                    Project Name2
+                                    Nathan
                                 </div>
                             </div>
                         </div>
@@ -185,14 +203,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/3.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/3.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category3
                                 </div>
                                 <div class="project-name">
-                                    Project Name3
+                                    Vik
                                 </div>
                             </div>
                         </div>
@@ -200,14 +218,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/4.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/4.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category4
                                 </div>
                                 <div class="project-name">
-                                    Project Name4
+                                    Jewel
                                 </div>
                             </div>
                         </div>
@@ -215,14 +233,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/5.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/5.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category5
                                 </div>
                                 <div class="project-name">
-                                    Project Name5
+                                    Jon
                                 </div>
                             </div>
                         </div>
@@ -230,14 +248,14 @@
                 </div>
                 <div class="col-lg-4 col-sm-6">
                     <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/6.jpg" class="img-responsive" alt="">
+                        <img src="bootstrap/img/portfolio/6.jpg" class="img-responsive" alt="">
                         <div class="portfolio-box-caption">
                             <div class="portfolio-box-caption-content">
                                 <div class="project-category text-faded">
                                     Category6
                                 </div>
                                 <div class="project-name">
-                                    Project Name6
+                                    Thomas
                                 </div>
                             </div>
                         </div>
@@ -247,34 +265,25 @@
         </div>
     </section>
 
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Hey Ü for Mobile</h2>
-                <a href="#" class="btn btn-default btn-xl wow tada">Visit iOS App store now!</a>
-            </div>
-        </div>
-    </aside>
-
     <section id="contact">
         <div class="container">
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
                     <h2 class="section-heading">Let's Get In Touch!</h2>
                     <hr class="primary">
-                    <p>Got a question or need help? Shoot us an email and we'll be happy to help! You can also provide some feedback on our app, or just say hello!</p>
+                    <p>Got a question? Just want to stop and say hi? Just shoot us an email!</p>
                 </div>
                 <div class="col-lg-4 col-lg-offset-2 text-center">
                     <i class="fa fa-phone fa-3x wow bounceIn"></i>
-                    <p>(123)-456-6789</p>
+                    <p>(708)-244-9032</p>
                 </div>
                 <div class="col-lg-4 text-center">
                     <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:your-email@your-domain.com">feedback@HeyU.com</a></p>
+                    <p><a href="mailto:ztan19@illinois.edu">ztan19@illinois.edu</a></p>
                 </div>
             </div>
         </div>
-    </section> -->
+    </section>
 
     <!-- jQuery -->
     <script src="bootstrap/js/jquery.js"></script>
@@ -291,5 +300,4 @@
     <script src="bootstrap/js/creative.js"></script>
 
 </body>
-
 </html>

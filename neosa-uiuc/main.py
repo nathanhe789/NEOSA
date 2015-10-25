@@ -27,7 +27,9 @@ jinja_environment = jinja2.Environment(
 
 class Test(webapp2.RequestHandler):
     def get(self):
-        self.response.out.write(getAllUsersLatLng())
+
+        template = jinja_environment.get_template('templates/profilepagebuffer.html')
+        self.response.out.write(template.render())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
@@ -105,13 +107,18 @@ class SignUpHandler(webapp2.RequestHandler):
         password = self.request.get("password")
         createUser(user_id,username, password, first_name, last_name, email_address)
 
-
 class ProfilePageHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/profilepage.html')
         self.response.out.write(template.render())
-
-
+class ProfilePageBufferHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/profilepagebuffer.html')
+        self.response.out.write(template.render())
+class ProfilePageWithLogoutHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/profilepagewithlogout.html')
+        self.response.out.write(template.render())
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
@@ -119,9 +126,11 @@ app = webapp2.WSGIApplication([
     ('/calendar', CalendarHandler),
     ('/about', AboutHandler),
     ('/profilepage', ProfilePageHandler),
+    ('/profilepagewithlogout', ProfilePageWithLogoutHandler),
     ('/signup', SignUpHandler),
     ('/login', LoginHandler),
     ('/profilepage', ProfilePageHandler),
+    ('/profilepagebuffer', ProfilePageBufferHandler),
     ('/test', Test),
     ('/.*', MainHandler)
 ], debug=True)
