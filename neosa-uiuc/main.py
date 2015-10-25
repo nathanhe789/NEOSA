@@ -56,9 +56,11 @@ class MapHandler(webapp2.RequestHandler):
     def post(self):
         user = users.get_current_user()
         if user:
-            latlng = self.request.body
+            blob = self.request.get('json')
+            latlng =  json.loads(blob)
             user = getCurrentUser().get()
             user.latlng = latlng
+            print user.latlng
             user.put()
 
 class CalendarHandler(webapp2.RequestHandler):
@@ -70,6 +72,13 @@ class AboutHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/about.html')
         self.response.out.write(template.render())
+
+class UsersHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json';
+        obj = {'latlngArray': getAllUsersLatLng()}
+        self.response.out.write(json.dumps(obj))
+
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
@@ -106,6 +115,7 @@ class ProfilePageHandler(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
+    ('/users', UsersHandler),
     ('/calendar', CalendarHandler),
     ('/about', AboutHandler),
     ('/profilepage', ProfilePageHandler),

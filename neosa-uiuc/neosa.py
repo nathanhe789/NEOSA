@@ -36,5 +36,4 @@ def getAllUsersLatLng():
     latlng = []
     for key in keys:
         latlng.append(key.get().latlng)
-        print key
     return latlng
