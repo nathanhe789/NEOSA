@@ -105,6 +105,8 @@ class ProfileHandler(webapp2.RequestHandler):
         self.redirect('/')
 
 class SubjectHandler(webapp2.RequestHandler):
+    def get(self):
+        self.redirect('/')
     def post(self):
         user = getCurrentUser()
         user.subject = self.response.get("subject")
