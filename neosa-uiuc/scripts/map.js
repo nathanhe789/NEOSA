@@ -4,7 +4,7 @@ var current_location;
 var marker;
 
 //Location update interval in milliseconds.
-var interval = 10000;
+//var interval = 10000;
 
 function initialize() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -17,12 +17,24 @@ function initialize() {
 }
 
 function getAllUsersLatLng(){
-  latlng = $('#latlng').text();
-  // console.log(latlng);
-  latlng = JSON.parse(latlng);
-  // console.log(latlng);
-  return latlng;
+  jQuery.ajax({
+    type: 'GET',
+    url: "/users",
+    success:
+    function(data){
+      setUsersPositions(data.latlngArray);
+    },
+    error:
+    function(data){
+      //console.log(data);
+    }
+  });
+}
 
+function setUsersPositions(latlngArray){
+  for(var i = 0; i < latlngArray.length; i = i + 1){
+    createMarker(latlngArray[i]);
+  }
 }
 
 function getUserLocation() {
@@ -48,6 +60,8 @@ function setLocation(position) {
   lat = position.coords.latitude
   long = position.coords.longitude;
   positionData = {lat: lat, lng: long};
+  var blob = JSON.stringify(positionData);
+
   //If the marker has already been created
   if(marker != null){
     //update the position
@@ -64,7 +78,7 @@ function setLocation(position) {
     type: 'POST',
     url: "/map",
     name: "latlng",
-    data: positionData,
+    data: {"json":blob},
     success:
     function(data){
       // console.log(data);
@@ -84,16 +98,7 @@ function ClearMarker() {
 }
 
 function createAllMarker(){
-  userlatlngs = getAllUsersLatLng();
-  for(var i = 0; i < userlatlngs.length; i++){
-    console.log(userlatlngs[i]);
-    // var marker = new google.maps.Marker({
-    //   map: map,
-    //   position: place.geometry.location
-    // bounds.extend(marker.getPosition());
-    // map.fitBounds(bounds);
-    // });
-  }
+  setInterval(getAllUsersLatLng, 200);
 }
 
 function createMarker(latLng) {
