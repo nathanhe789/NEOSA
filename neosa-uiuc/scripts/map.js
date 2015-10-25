@@ -13,18 +13,20 @@ function initialize() {
   });
   initCenterMapButton();
   getUserLocation();
+  createAllMarker();
+}
+
+function getAllUsersLatLng(){
+  latlng = $('#latlng').text();
+  // console.log(latlng);
+  latlng = JSON.parse(latlng);
+  // console.log(latlng);
+  return latlng;
+
 }
 
 function getUserLocation() {
   if (navigator.geolocation){
-    /**
-    //Repeatedly makes calls to getCurrentPosition and sets that on the map.
-    //Interval is 200ms
-    setInterval(function () {
-          navigator.geolocation.getCurrentPosition(setLocation);
-    }, interval);
-    **/
-
     /*
      * REPLACE setInterval with HTML5 watchPosition. Should be a
      * a cleaner implementation of what we want.
@@ -42,6 +44,7 @@ function getUserLocation() {
 }
 
 function setLocation(position) {
+
   lat = position.coords.latitude
   long = position.coords.longitude;
   positionData = {lat: lat, lng: long};
@@ -64,11 +67,11 @@ function setLocation(position) {
     data: positionData,
     success:
     function(data){
-      console.log(data);
+      // console.log(data);
     },
     error:
     function(data){
-      console.log(data);
+      // console.log(data);
     }
   });
 }
@@ -80,12 +83,33 @@ function ClearMarker() {
   marker = null;
 }
 
+function createAllMarker(){
+  userlatlngs = getAllUsersLatLng();
+  for(var i = 0; i < userlatlngs.length; i++){
+    console.log(userlatlngs[i]);
+    // var marker = new google.maps.Marker({
+    //   map: map,
+    //   position: place.geometry.location
+    // bounds.extend(marker.getPosition());
+    // map.fitBounds(bounds);
+    // });
+  }
+}
+
 function createMarker(latLng) {
+  var pinColor = "FE7569";
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
+
   marker = new google.maps.Marker({
     map: map,
     position: latLng,
+    icon: pinImage,
     title: 'You'
   });
+  console.log(latLng);
 }
 
 function updateMarker(latLng) {

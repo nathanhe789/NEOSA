@@ -2,15 +2,13 @@
 <html lang="en">
 
 <head>
-
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Hey Ü | Login</title>
-
+    <title>Hey Ü | Profile</title>
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
 
@@ -53,17 +51,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a class="page-scroll" href="/login"> Sign Out</a>
+                        <a class="page-scroll" href="/login">Sign Out</a>
                     </li>
-                    <!-- <li>
-                        <a class="page-scroll" href="/signup">Sign Up</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/about">About</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="/contact">Contact</a>
-                    </li> -->
+
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -74,254 +64,50 @@
     <header>
         <div class="header-content">
             <div class="header-content-inner">
-                <p align="right"><h1 align="left">Welcome {{username}}  </h1></p>
-                <p></p>
-                  <!-- <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a> -->
-                <table border="1" style="width:60%">
-              <tr>
-                <th>Sunday</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday is the best day of the year</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-              </tr>
-              <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-              <tr>
-                <td>Eve</td>
-                <td>Jackson</td>
-                <td>94</td>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
-                <td>50</td>
-              </tr>
-            </table>
-
+                <h1>Sign Up</h1>
+                <hr>
+                <p>It's short and simple.</p>
+                <!-- <a href="#about" class="btn btn-primary btn-xl page-scroll">Find Out More</a> -->
+               <!--  <form method="post">
+                  <input type="text" name="first_name" placeholder="First Name"><br>
+                  <br>
+                  <input type="text" name="last_name" placeholder="Last Name"><br>
+                  <br>
+                  <input type="text" name="email_address" placeholder="Email Address"><br>
+                  <br>
+                  <input type="text" name="username" placeholder="Username"><br>
+                  <br>
+                  <input type="password" name="password" placeholder="Password"><br>
+                  <br>
+                  <br>
+                  <input type="submit" value="Done" class="btn btn-primary btn-xl">
+                </form> -->
+                <table  border="1" style="width:50%">
+                      <tr>
+                        <th>Day</th>
+                        <th>Mon</th>
+                      </tr>
+                      <tr>
+                        <td>9:00 am </td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>10:00 am</td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>11:00 am</td>
+                        <td> </td>
+                      </tr>
+                      <tr>
+                        <td>12:00 pm</td>
+                        <td> </td>
+                      </tr>
+                 </table>
             </div>
         </div>
     </header>
-
-    <!-- <section class="bg-primary" id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Already have an account?</h2>
-                    <hr class="light">
-                    <p class="text-faded">Just simply login to our app and immediately start using it with your friends!</p>
-                    <a href="#" class="btn btn-default btn-xl">Login</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h2 class="section-heading">Dont have an account?</h2>
-                    <a href="signup.html" class="btn btn-default btn-xl">Sign Up</a>
-                    <hr class="primary">
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-diamond wow bounceIn text-primary"></i>
-                        <h3>Step 1</h3>
-                        <p class="text-muted">Sign up now!</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-paper-plane wow bounceIn text-primary" data-wow-delay=".1s"></i>
-                        <h3>Step 2</h3>
-                        <p class="text-muted">Verification.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-newspaper-o wow bounceIn text-primary" data-wow-delay=".2s"></i>
-                        <h3>Step 3</h3>
-                        <p class="text-muted">Find friends to study with.</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 text-center">
-                    <div class="service-box">
-                        <i class="fa fa-4x fa-heart wow bounceIn text-primary" data-wow-delay=".3s"></i>
-                        <h3>Step 4</h3>
-                        <p class="text-muted">Start a study session.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="no-padding" id="portfolio">
-        <div class="container-fluid">
-            <div class="row no-gutter">
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/1.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category1
-                                </div>
-                                <div class="project-name">
-                                    Project Name1
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/2.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category2
-                                </div>
-                                <div class="project-name">
-                                    Project Name2
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/3.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category3
-                                </div>
-                                <div class="project-name">
-                                    Project Name3
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/4.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category4
-                                </div>
-                                <div class="project-name">
-                                    Project Name4
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/5.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category5
-                                </div>
-                                <div class="project-name">
-                                    Project Name5
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-lg-4 col-sm-6">
-                    <a href="#" class="portfolio-box">
-                        <img src="img/portfolio/6.jpg" class="img-responsive" alt="">
-                        <div class="portfolio-box-caption">
-                            <div class="portfolio-box-caption-content">
-                                <div class="project-category text-faded">
-                                    Category6
-                                </div>
-                                <div class="project-name">
-                                    Project Name6
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <aside class="bg-dark">
-        <div class="container text-center">
-            <div class="call-to-action">
-                <h2>Hey Ü for Mobile</h2>
-                <a href="#" class="btn btn-default btn-xl wow tada">Visit iOS App store now!</a>
-            </div>
-        </div>
-    </aside>
-
-    <section id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <h2 class="section-heading">Let's Get In Touch!</h2>
-                    <hr class="primary">
-                    <p>Got a question or need help? Shoot us an email and we'll be happy to help! You can also provide some feedback on our app, or just say hello!</p>
-                </div>
-                <div class="col-lg-4 col-lg-offset-2 text-center">
-                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
-                    <p>(123)-456-6789</p>
-                </div>
-                <div class="col-lg-4 text-center">
-                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
-                    <p><a href="mailto:your-email@your-domain.com">feedback@HeyU.com</a></p>
-                </div>
-            </div>
-        </div>
-    </section> -->
-
-    <!-- jQuery -->
+  <!-- jQuery -->
     <script src="bootstrap/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -334,8 +120,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="bootstrap/js/creative.js"></script>
-
-
 </body>
 
 </html>
