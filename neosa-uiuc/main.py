@@ -45,7 +45,6 @@ class MainHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('templates/index0.html')
             self.response.out.write(template.render(current_user))
 
-
 class MapHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -102,14 +101,16 @@ class ProfileHandler(webapp2.RequestHandler):
         major = self.request.get("major")
         email_address = user.email()
         createUser(user_id,username, major, first_name, last_name, email_address)
-        self.redirect('/')
+        self.redirect('/subject')
 
 class SubjectHandler(webapp2.RequestHandler):
     def get(self):
-        self.redirect('/')
+        template = jinja_environment.get_template('templates/subject.html')
+        self.response.out.write(template.render())
     def post(self):
-        user = getCurrentUser()
-        user.subject = self.response.get("subject")
+        user = getCurrentUser().get()
+        user.subject = self.request.get("subject")
+        user.put()
         self.redirect('/')
 
 app = webapp2.WSGIApplication([
