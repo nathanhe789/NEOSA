@@ -28,22 +28,21 @@ jinja_environment = jinja2.Environment(
 class Test(webapp2.RequestHandler):
     def get(self):
 
-        template = jinja_environment.get_template('templates/profilepagebuffer.html')
+        template = jinja_environment.get_template('templates/subject.html')
         self.response.out.write(template.render())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/index.html')
-        current_user = {'current_user':'Stranger'}
-        request = self.request.get('logout_button')
-        if request:
-            self.redirect(users.create_logout_url('/'))
         user = getCurrentUser()
+        current_user = {'current_user':'Stranger'}
         if user:
+            template = jinja_environment.get_template('templates/index.html')
             first_name = user.get().first_name
-            current_user['current_user'] = first_name
+            if first_name:
+                current_user['current_user'] = first_name
             self.response.out.write(template.render(current_user))
         else:
+            template = jinja_environment.get_template('templates/index0.html')
             self.response.out.write(template.render(current_user))
 
 class MapHandler(webapp2.RequestHandler):
@@ -65,72 +64,63 @@ class MapHandler(webapp2.RequestHandler):
             print user.latlng
             user.put()
 
-class CalendarHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/calendar.html')
-        self.response.out.write(template.render())
-
-class AboutHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/about.html')
-        self.response.out.write(template.render())
-
 class UsersHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json';
         obj = {'latlngArray': getAllUsersLatLng()}
         self.response.out.write(json.dumps(obj))
 
+class LogoutHandler(webapp2.RequestHandler):
+    def get(self):
+        self.redirect(users.create_logout_url('/'))
 
 class LoginHandler(webapp2.RequestHandler):
     def get(self):
-        self.redirect(users.create_login_url('/'))
-
+        self.redirect(users.create_login_url('/profile'))
 
 class ProfilePageHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/profilepage.html')
         self.response.out.write(template.render())
 
-
-class SignUpHandler(webapp2.RequestHandler):
+class ProfileHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/signup.html')
+        user = getCurrentUser()
+        if user:
+            first_name = user.get().first_name
+            if first_name:
+                self.redirect('/subject')
+        template = jinja_environment.get_template('templates/profile.html')
         self.response.out.write(template.render())
     def post(self):
         user = users.get_current_user()
         user_id = user.user_id()
+        username = self.request.get("username")
         first_name = self.request.get("first_name")
         last_name = self.request.get("last_name")
+        major = self.request.get("major")
         email_address = user.email()
-        username = self.request.get("username")
-        password = self.request.get("password")
-        createUser(user_id,username, password, first_name, last_name, email_address)
+        createUser(user_id,username, major, first_name, last_name, email_address)
+        self.redirect('/subject')
 
-class ProfilePageHandler(webapp2.RequestHandler):
+class SubjectHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/profilepage.html')
+        template = jinja_environment.get_template('templates/subject.html')
         self.response.out.write(template.render())
-class ProfilePageBufferHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/profilepagebuffer.html')
-        self.response.out.write(template.render())
-class ProfilePageWithLogoutHandler(webapp2.RequestHandler):
-    def get(self):
-        template = jinja_environment.get_template('templates/profilepagewithlogout.html')
-        self.response.out.write(template.render())
+    def post(self):
+        user = getCurrentUser().get()
+        user.subject = self.request.get("subject")
+        user.put()
+        self.redirect('/')
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
     ('/users', UsersHandler),
-    ('/calendar', CalendarHandler),
-    ('/about', AboutHandler),
-    ('/profilepage', ProfilePageHandler),
-    ('/profilepagewithlogout', ProfilePageWithLogoutHandler),
-    ('/signup', SignUpHandler),
+    ('/profile', ProfileHandler),
     ('/login', LoginHandler),
     ('/profilepage', ProfilePageHandler),
-    ('/profilepagebuffer', ProfilePageBufferHandler),
     ('/test', Test),
+    ('/logout', LogoutHandler),
+    ('/subject', SubjectHandler),
     ('/.*', MainHandler)
 ], debug=True)

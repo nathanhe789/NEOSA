@@ -4,12 +4,13 @@ from google.appengine.api import users
 
 class UserModel(ndb.Model):
     user_id = ndb.StringProperty(required = True)
-    username = ndb.StringProperty(required = True)
-    password = ndb.StringProperty(required = True)
+    username = ndb.StringProperty()
+    major = ndb.StringProperty()
     first_name = ndb.StringProperty()
     last_name = ndb.StringProperty()
-    email_address = ndb.StringProperty(required = True)
+    email_address = ndb.StringProperty()
     latlng = ndb.JsonProperty()
+    subject = ndb.StringProperty()
 
 def getUser(username, password):
     key = False
@@ -27,8 +28,8 @@ def getCurrentUser():
             key = user[0]
     return key
 
-def createUser(user,username, password, first_name, last_name, email_address):
-    user = UserModel(user_id = user, username = username, password = password, first_name = first_name, last_name =last_name, email_address = email_address)
+def createUser(user,username, major, first_name, last_name, email_address):
+    user = UserModel(user_id = user, username = username, major = major, first_name = first_name, last_name =last_name, email_address = email_address)
     user.put()
 
 def getAllUsersLatLng():

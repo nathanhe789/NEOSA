@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="scripts/profilepage.js"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +23,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="bootstrap/css/creative.css" type="text/css">
-
+    <link rel="stylesheet" href="stylesheets/profilepage.css" type="text/css">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,7 +45,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="index.html">Hey Ü</a>
+                <a class="navbar-brand page-scroll" href="/">Hey Ü</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -82,7 +83,7 @@
                   <br>
                   <input type="submit" value="Done" class="btn btn-primary btn-xl">
                 </form> -->
-                <table  border="1" style="width:50%">
+                <!-- <table border="1" style="width:50%" cellpadding="0" cellspacing="0" id="our_table">
                       <tr>
                         <th>Day</th>
                         <th>Mon</th>
@@ -103,7 +104,47 @@
                         <td>12:00 pm</td>
                         <td> </td>
                       </tr>
-                 </table>
+                 </table> -->
+
+                 <!-- <table cellpadding="0" cellspacing="0" id="our_table">
+                        <tr>
+                          <td>10:00 </td>
+                          <td>b</td>
+                          <td>c</td>
+                        </tr>
+                        <tr>
+                          <td>11:00am</td>
+                          <td>e</td>
+                          <td>f</td>
+                        </tr>
+                        <tr>
+                          <td>g</td>
+                          <td>h</td>
+                          <td>i</td>
+                        </tr>
+                      </table> -->
+                      <table  style='height:20%' cellpadding="0" cellspacing="0" id="our_table" >
+                            <tr>
+                              <td>10:00 am</td>
+
+                            </tr>
+                            <tr>
+                              <td>11:00 am</td>
+
+                            </tr>
+                            <tr>
+                              <td>12:00 pm</td>
+
+                            </tr>
+                            <tr>
+                              <td>1:00 pm</td>
+
+                            </tr>
+                          
+                      </table>
+
+                      </br>
+                      <button type="button" id='find_button_id'>Find Me A Buddy!</button>
             </div>
         </div>
     </header>
