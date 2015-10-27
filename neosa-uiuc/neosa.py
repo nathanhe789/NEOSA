@@ -11,7 +11,7 @@ class UserModel(ndb.Model):
     email_address = ndb.StringProperty()
     latlng = ndb.JsonProperty()
     subject = ndb.StringProperty()
-    schedule = ndb.TimeProperty()
+    schedule = ndb.DateTimeProperty(repeated = True)
 
 def getUser(username, password):
     key = False
