@@ -28,9 +28,11 @@ jinja_environment = jinja2.Environment(
 
 class Test(webapp2.RequestHandler):
     def get(self):
-
-        template = jinja_environment.get_template('templates/subject.html')
-        self.response.out.write(template.render())
+        user = getCurrentUser().get()
+        for date in user.schedule:
+            self.response.out.write('%s --- ' %(date))
+        # template = jinja_environment.get_template('templates/subject.html')
+        # self.response.out.write(template.render())
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
