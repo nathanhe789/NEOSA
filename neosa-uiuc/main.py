@@ -19,6 +19,7 @@ import jinja2
 import json
 import os
 import logging
+from datetime import datetime
 from google.appengine.api import users
 from neosa import *
 
@@ -86,6 +87,19 @@ class ScheduleHandler(webapp2.RequestHandler):
         current_user['current_user'] = first_name
         template = jinja_environment.get_template('templates/schedule.html')
         self.response.out.write(template.render(current_user))
+    def post(self):
+        user = users.get_current_user()
+        if user:
+            user = getCurrentUser().get()
+            data = json.loads(self.request.body);
+            schedule = data["schedule"];
+            #Make python friendly date objects
+            dates = [datetime.strptime(dateString, "%a, %d %b %Y %H:%M:%S %Z") for dateString in schedule]
+            #store these in user
+            user.schedule = dates
+            user.put()
+            logging.error(dates)
+
 
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
