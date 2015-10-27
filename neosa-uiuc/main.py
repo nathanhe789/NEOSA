@@ -80,8 +80,12 @@ class LoginHandler(webapp2.RequestHandler):
 
 class ScheduleHandler(webapp2.RequestHandler):
     def get(self):
+        user = getCurrentUser()
+        current_user = {'current_user':'Stranger'}
+        first_name = user.get().first_name
+        current_user['current_user'] = first_name
         template = jinja_environment.get_template('templates/schedule.html')
-        self.response.out.write(template.render())
+        self.response.out.write(template.render(current_user))
 
 class ProfileHandler(webapp2.RequestHandler):
     def get(self):
