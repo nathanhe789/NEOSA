@@ -61,7 +61,7 @@ class MapHandler(webapp2.RequestHandler):
             latlng =  json.loads(blob)
             user = getCurrentUser().get()
             user.latlng = latlng
-            print user.latlng
+            logging.error(user.latlng)
             user.put()
 
 class UsersHandler(webapp2.RequestHandler):
@@ -78,9 +78,9 @@ class LoginHandler(webapp2.RequestHandler):
     def get(self):
         self.redirect(users.create_login_url('/profile'))
 
-class ProfilePageHandler(webapp2.RequestHandler):
+class ScheduleHandler(webapp2.RequestHandler):
     def get(self):
-        template = jinja_environment.get_template('templates/profilepage.html')
+        template = jinja_environment.get_template('templates/schedule.html')
         self.response.out.write(template.render())
 
 class ProfileHandler(webapp2.RequestHandler):
@@ -118,7 +118,7 @@ app = webapp2.WSGIApplication([
     ('/users', UsersHandler),
     ('/profile', ProfileHandler),
     ('/login', LoginHandler),
-    ('/profilepage', ProfilePageHandler),
+    ('/schedule', ScheduleHandler),
     ('/test', Test),
     ('/logout', LogoutHandler),
     ('/subject', SubjectHandler),

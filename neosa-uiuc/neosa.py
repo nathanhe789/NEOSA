@@ -11,6 +11,7 @@ class UserModel(ndb.Model):
     email_address = ndb.StringProperty()
     latlng = ndb.JsonProperty()
     subject = ndb.StringProperty()
+    schedule = ndb.TimeProperty()
 
 def getUser(username, password):
     key = False
@@ -34,7 +35,8 @@ def createUser(user,username, major, first_name, last_name, email_address):
 
 def getAllUsersLatLng():
     keys = UserModel.query().fetch(keys_only=True)
-    latlng = []
+    userLatLngTupleArray = []
     for key in keys:
-        latlng.append(key.get().latlng)
-    return latlng
+        user = key.get()
+        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
+    return userLatLngTupleArray
