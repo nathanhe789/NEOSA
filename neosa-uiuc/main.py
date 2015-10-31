@@ -89,6 +89,11 @@ class ScheduleHandler(webapp2.RequestHandler):
         current_user['current_user'] = first_name
         template = jinja_environment.get_template('templates/schedule.html')
         self.response.out.write(template.render(current_user))
+        # print selected_Times
+
+
+
+
     def post(self):
         user = users.get_current_user()
         if user:
