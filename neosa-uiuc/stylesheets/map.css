@@ -9,10 +9,9 @@ html, body { height: 100%; margin: 0; padding: 0; }
 
 .friendsList{text-align: center; list-style-type:none; }
 li{}
-=======
+
 #friendsHeader{width: 100%; text-align: center;}
 #friendsHeader2{margin-top: -75px;}
 
 /*.friendsList{text-align: center; list-style-type:none; }*/
 /*.container{text-align: center;}*/
->>>>>>> e9313a73774aec1f5f9ff5b87a5b9e145ffd36b2
