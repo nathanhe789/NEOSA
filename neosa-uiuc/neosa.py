@@ -16,13 +16,7 @@ class UserModel(ndb.Model):
     latlng = ndb.JsonProperty()
     subject = ndb.StringProperty()
     schedule = ndb.DateTimeProperty(repeated = True)
-
-def getUser(username, password):
-    key = False
-    user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(keys_only=True)
-    if len(user) > 0:
-        key = user[0]
-    return key
+    isActive = ndb.BooleanProperty()
 
 def getCurrentUser():
     key = False
@@ -34,7 +28,15 @@ def getCurrentUser():
     return key
 
 def createUser(user,username, major, first_name, last_name, email_address):
-    user = UserModel(user_id = user, username = username, major = major, first_name = first_name, last_name =last_name, email_address = email_address)
+    user = UserModel(
+                user_id = user,
+                username = username,
+                major = major,
+                first_name = first_name,
+                last_name =last_name,
+                email_address = email_address,
+                isActive = True
+                )
     user.put()
 
 def getAllUsersLatLng():
@@ -44,3 +46,16 @@ def getAllUsersLatLng():
         user = key.get()
         userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
     return userLatLngTupleArray
+
+def getAllActiveUsersLatLng():
+    keys = UserModel.query(UserModel.isActive == True).fetch(keys_only=True)
+    userLatLngTupleArray = []
+    for key in keys:
+        user = key.get()
+        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
+    return userLatLngTupleArray
+
+def setActive(status):
+    user = getCurrentUser().get()
+    user.isActive = status
+    user.put()

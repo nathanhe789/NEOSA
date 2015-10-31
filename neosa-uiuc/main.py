@@ -31,9 +31,9 @@ class Test(webapp2.RequestHandler):
         user = getCurrentUser().get()
         for date in user.schedule:
             self.response.out.write('%s --- ' %(date))
+        # self.response.out.write(isActive())
         # template = jinja_environment.get_template('templates/subject.html')
         # self.response.out.write(template.render())
-
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = getCurrentUser()
@@ -53,7 +53,8 @@ class MapHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         template = jinja_environment.get_template('templates/map.html')
         if user:
-            latlng = {'latlng':json.dumps(getAllUsersLatLng())}
+            setActive(True)
+            latlng = {'latlng':json.dumps(getAllActiveUsersLatLng())}
             self.response.out.write(template.render(latlng))
         else:
             self.redirect('/login')
@@ -68,9 +69,9 @@ class MapHandler(webapp2.RequestHandler):
             user.put()
 
 class UsersHandler(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         self.response.headers['Content-Type'] = 'application/json';
-        obj = {'latlngArray': getAllUsersLatLng()}
+        obj = {'latlngArray': getAllActiveUsersLatLng()}
         self.response.out.write(json.dumps(obj))
 
 class LogoutHandler(webapp2.RequestHandler):
@@ -138,13 +139,16 @@ class SubjectHandler(webapp2.RequestHandler):
         user.put()
         self.redirect('/')
 
+class StatusHandler(webapp2.RequestHandler):
+    def post(self):
+        setActive(False)
+
 class ProfilePageHandler(webapp2.RequestHandler):
     def get(self):
         template = jinja_environment.get_template('templates/profilepage69.html')
         self.response.out.write(template.render())
     def post(self):
         user = getCurrentUser.get()
-
 
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
@@ -155,6 +159,7 @@ app = webapp2.WSGIApplication([
     ('/test', Test),
     ('/logout', LogoutHandler),
     ('/subject', SubjectHandler),
+    ('/status', StatusHandler),
     ('/profilepage69', ProfilePageHandler),
     ('/.*', MainHandler)
 ], debug=True)

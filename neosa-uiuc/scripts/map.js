@@ -16,11 +16,12 @@ function initialize() {
   getUserLocation();
   getAllUsersLatLng()
   setInterval(getAllUsersLatLng, 30000);
-}
+  window.onbeforeunload = function(e) {
+    jQuery.post("/status");
+    return "You might not be visible on the map to other users";
+  };
 
-$( window ).unload(function() {
-  jQuery.get("/logout");
-});
+}
 
 function getUserLocation() {
   if (navigator.geolocation){
@@ -98,7 +99,7 @@ function updateMarker(latLng) {
 
 function getAllUsersLatLng(){
   jQuery.ajax({
-    type: 'GET',
+    type: 'POST',
     url: "/users",
     success:
     function(data){
