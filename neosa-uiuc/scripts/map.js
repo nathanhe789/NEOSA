@@ -18,6 +18,10 @@ function initialize() {
   setInterval(getAllUsersLatLng, 30000);
 }
 
+$( window ).unload(function() {
+  jQuery.get("/logout");
+});
+
 function getUserLocation() {
   if (navigator.geolocation){
     /*

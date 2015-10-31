@@ -1,6 +1,10 @@
 # Author Joe Tan
 from google.appengine.ext import ndb
 from google.appengine.api import users
+import datetime
+from google.appengine.api import datastore_types
+from google.appengine.api import xmpp
+from google.appengine.ext.webapp import xmpp_handlers
 
 class UserModel(ndb.Model):
     user_id = ndb.StringProperty(required = True)
