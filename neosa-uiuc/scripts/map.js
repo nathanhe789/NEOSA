@@ -2,6 +2,7 @@
 var map;
 var current_location;
 var marker;
+var userMarkers={};
 
 //Location update interval in milliseconds.
 //var interval = 10000;
@@ -13,28 +14,8 @@ function initialize() {
   });
   initCenterMapButton();
   getUserLocation();
-  createAllMarker();
-}
-
-function getAllUsersLatLng(){
-  jQuery.ajax({
-    type: 'GET',
-    url: "/users",
-    success:
-    function(data){
-      setUsersPositions(data.latlngArray);
-    },
-    error:
-    function(data){
-      //console.log(data);
-    }
-  });
-}
-
-function setUsersPositions(latlngArray){
-  for(var i = 0; i < latlngArray.length; i = i + 1){
-    createMarker(latlngArray[i]);
-  }
+  getAllUsersLatLng()
+  setInterval(getAllUsersLatLng, 30000);
 }
 
 function getUserLocation() {
@@ -57,9 +38,9 @@ function getUserLocation() {
 
 function setLocation(position) {
 
-  lat = position.coords.latitude
-  long = position.coords.longitude;
-  positionData = {lat: lat, lng: long};
+  var lat = position.coords.latitude
+  var long = position.coords.longitude;
+  var positionData = {lat: lat, lng: long};
   var blob = JSON.stringify(positionData);
 
   //If the marker has already been created
@@ -69,9 +50,10 @@ function setLocation(position) {
   }
   else{
     //otherwise, create a new marker
-    current_location = new google.maps.LatLng(lat,long);
+    var current_location = new google.maps.LatLng(lat,long);
     map.setCenter(positionData);
-    createMarker(positionData);
+    //Commented out since it'll be fetched from db anyways
+    //createMarker(positionData);
   }
   //POST lat and long to backend
   jQuery.ajax({
@@ -90,17 +72,6 @@ function setLocation(position) {
   });
 }
 
-function ClearMarker() {
-  if(marker != null ){
-    marker.setMap(null);
-  }
-  marker = null;
-}
-
-function createAllMarker(){
-  setInterval(getAllUsersLatLng, 200);
-}
-
 function createMarker(latLng) {
   var pinColor = "FE7569";
   var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
@@ -114,11 +85,70 @@ function createMarker(latLng) {
     icon: pinImage,
     title: 'You'
   });
-  console.log(latLng);
 }
 
 function updateMarker(latLng) {
   marker.setPosition(latLng);
+}
+
+
+function getAllUsersLatLng(){
+  jQuery.ajax({
+    type: 'GET',
+    url: "/users",
+    success:
+    function(data){
+      setUsersPositions(data.latlngArray);
+    },
+    error:
+    function(data){
+      //console.log(data);
+    }
+  });
+}
+
+function setUsersPositions(latlngArray){
+  for(var i = 0; i < latlngArray.length; i = i + 1){
+    //if the userMarkers dict already has this user
+    if(userMarkers.hasOwnProperty(latlngArray[i].user_id)){
+      //update their marker
+      updateUserMarker(latlngArray[i]);
+    }
+    //otherwise, create a new marker.
+    else {
+      createUserMarker(latlngArray[i]);
+    }
+  }
+}
+
+
+function createUserMarker(object){
+  var latLng = object.latlng;
+  var userId = object.user_id;
+  var pinColor = "FE7569";
+    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+      new google.maps.Size(21, 34),
+      new google.maps.Point(0,0),
+      new google.maps.Point(10, 34));
+
+    var userMarker = new google.maps.Marker({
+      map: map,
+      position: latLng,
+      icon: pinImage,
+      title: 'User: ' +userId
+    });
+
+  userMarkers[userId] = {"marker": userMarker};
+  console.log("Creating marker for user: " + userId + "'s location.'");
+  console.log(userMarkers);
+}
+
+function updateUserMarker(object) {
+    var latLng = object.latlng;
+    var userId = object.user_id;
+    var userMarker = userMarkers[userId]["marker"];
+    userMarker.setPosition(latLng);
+    console.log("Updating user: " + userId + "'s location.'");
 }
 
 /**
