@@ -31,6 +31,7 @@ class Test(webapp2.RequestHandler):
         user = getCurrentUser().get()
         for date in user.schedule:
             self.response.out.write('%s --- ' %(date))
+        # self.response.out.write(isActive())
         # template = jinja_environment.get_template('templates/subject.html')
         # self.response.out.write(template.render())
 class MainHandler(webapp2.RequestHandler):
@@ -74,6 +75,7 @@ class UsersHandler(webapp2.RequestHandler):
 
 class LogoutHandler(webapp2.RequestHandler):
     def get(self):
+        setActive(False)
         self.redirect(users.create_logout_url('/'))
 
 class LoginHandler(webapp2.RequestHandler):
@@ -106,6 +108,7 @@ class ProfileHandler(webapp2.RequestHandler):
     def get(self):
         user = getCurrentUser()
         if user:
+            setActive(True)
             first_name = user.get().first_name
             if first_name:
                 self.redirect('/subject')
