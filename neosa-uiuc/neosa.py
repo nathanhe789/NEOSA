@@ -47,8 +47,15 @@ def getAllUsersLatLng():
         userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
     return userLatLngTupleArray
 
+def getAllActiveUsersLatLng():
+    keys = UserModel.query(UserModel.isActive == True).fetch(keys_only=True)
+    userLatLngTupleArray = []
+    for key in keys:
+        user = key.get()
+        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
+    return userLatLngTupleArray
+
 def setActive(status):
     user = getCurrentUser().get()
     user.isActive = status
     user.put()
-    
