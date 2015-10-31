@@ -14,7 +14,8 @@ function initialize() {
   });
   initCenterMapButton();
   getUserLocation();
-  setInterval(getAllUsersLatLng, 200);
+  getAllUsersLatLng()
+  setInterval(getAllUsersLatLng, 30000);
 }
 
 function getUserLocation() {
