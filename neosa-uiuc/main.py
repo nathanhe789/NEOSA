@@ -138,6 +138,13 @@ class StatusHandler(webapp2.RequestHandler):
     def post(self):
         setActive(False)
 
+class ProfilePageHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/profilepage69.html')
+        self.response.out.write(template.render())
+    def post(self):
+        user = getCurrentUser.get()
+
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
     ('/users', UsersHandler),
@@ -148,5 +155,6 @@ app = webapp2.WSGIApplication([
     ('/logout', LogoutHandler),
     ('/subject', SubjectHandler),
     ('/status', StatusHandler),
+    ('/profilepage69', ProfilePageHandler),
     ('/.*', MainHandler)
 ], debug=True)
