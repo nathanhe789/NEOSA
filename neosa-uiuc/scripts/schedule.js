@@ -1,6 +1,5 @@
 $(document).ready(function(){
   var selected_Times = [];
-  var test_Selected_Times = selected_Times;
 ;
 
 
@@ -65,9 +64,6 @@ $(document).ready(function(){
       date.setHours(timeInt, 0,0);
       //convert it to UTCString so python can interpret it... -_-
       times.push(date.toUTCString());
-
-
-
     }
 
 
@@ -91,5 +87,3 @@ $(document).ready(function(){
 
 
 });
-//how
-// get times[] and and highlighted the contents (td) of array

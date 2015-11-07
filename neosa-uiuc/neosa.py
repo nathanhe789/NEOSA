@@ -1,10 +1,6 @@
 # Author Joe Tan
 from google.appengine.ext import ndb
 from google.appengine.api import users
-import datetime
-from google.appengine.api import datastore_types
-from google.appengine.api import xmpp
-from google.appengine.ext.webapp import xmpp_handlers
 
 class UserModel(ndb.Model):
     user_id = ndb.StringProperty(required = True)
@@ -16,7 +12,13 @@ class UserModel(ndb.Model):
     latlng = ndb.JsonProperty()
     subject = ndb.StringProperty()
     schedule = ndb.DateTimeProperty(repeated = True)
-    isActive = ndb.BooleanProperty()
+
+def getUser(username, password):
+    key = False
+    user = UserModel.query(UserModel.username == username and UserModel.password == password).fetch(keys_only=True)
+    if len(user) > 0:
+        key = user[0]
+    return key
 
 def getCurrentUser():
     key = False
@@ -28,15 +30,7 @@ def getCurrentUser():
     return key
 
 def createUser(user,username, major, first_name, last_name, email_address):
-    user = UserModel(
-                user_id = user,
-                username = username,
-                major = major,
-                first_name = first_name,
-                last_name =last_name,
-                email_address = email_address,
-                isActive = True
-                )
+    user = UserModel(user_id = user, username = username, major = major, first_name = first_name, last_name =last_name, email_address = email_address)
     user.put()
 
 def getAllUsersLatLng():
@@ -46,16 +40,3 @@ def getAllUsersLatLng():
         user = key.get()
         userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
     return userLatLngTupleArray
-
-def getAllActiveUsersLatLng():
-    keys = UserModel.query(UserModel.isActive == True).fetch(keys_only=True)
-    userLatLngTupleArray = []
-    for key in keys:
-        user = key.get()
-        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
-    return userLatLngTupleArray
-
-def setActive(status):
-    user = getCurrentUser().get()
-    user.isActive = status
-    user.put()
