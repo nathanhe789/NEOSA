@@ -132,10 +132,18 @@ class SubjectHandler(webapp2.RequestHandler):
         user.put()
         self.redirect('/')
 
+class ProfilePageHandler(webapp2.RequestHandler):
+    def get(self):
+        template = jinja_environment.get_template('templates/profilepage69.html')
+        self.response.out.write(template.render())
+    def post(self):
+        user = getCurrentUser.get()
+
 app = webapp2.WSGIApplication([
     ('/map', MapHandler),
     ('/users', UsersHandler),
     ('/profile', ProfileHandler),
+    ('/profilepage69', ProfilePageHandler),
     ('/login', LoginHandler),
     ('/schedule', ScheduleHandler),
     ('/test', Test),
