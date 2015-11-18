@@ -1,0 +1,6 @@
+{
+  "name": "neosa-chat",
+  "description": "a chat service for the neosa app",
+  "version": "0.1",
+  "scripts": { "web" : "node neosa-chat/index.js" } 
+}
