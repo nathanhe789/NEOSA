@@ -1,6 +1,9 @@
 {
-  "name": "neosa-chat",
-  "description": "a chat service for the neosa app",
-  "version": "0.1",
-  "scripts": { "web" : "node neosa-chat/index.js" } 
+  "name": "socket-chat-example",
+  "version": "0.0.1",
+  "description": "my first socket.io app",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.7"
+  }
 }
