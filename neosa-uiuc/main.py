@@ -46,6 +46,8 @@ class MainHandler(webapp2.RequestHandler):
         else:
             template = jinja_environment.get_template('templates/index0.html')
             self.response.out.write(template.render(current_user))
+    def post(self):
+        setCurretUserActive()
 
 class MapHandler(webapp2.RequestHandler):
     def get(self):
@@ -69,7 +71,7 @@ class MapHandler(webapp2.RequestHandler):
 class UsersHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json';
-        obj = {'latlngArray': getAllUsersLatLng()}
+        obj = {'latlngArray': getAllOtherActiveUsersLatLng()}
         self.response.out.write(json.dumps(obj))
 
 class LogoutHandler(webapp2.RequestHandler):
