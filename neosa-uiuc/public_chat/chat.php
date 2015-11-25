@@ -8,11 +8,16 @@ $user = $_GET['u'];
     <title>Public Chat</title>
     <link rel="stylesheet" type="text/css" href="chat.css"></linK>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <!-- <script src="//www.parsecdn.com/js/parse-1.6.7.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-latest.js"></script>
+    <script src="parse.js"/> -->
+
   </head>
   <body>
     <div class="chat_container">
         <div class="chat_header">
-          <h3>Welcome <?php echo ucwords($user);?></h3>
+          <h3>Public Chat <?php echo ucwords($user);?></h3>
         </div>
         <div class="chat_messages"></div>
         <div class="chat_bottom">
