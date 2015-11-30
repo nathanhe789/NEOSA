@@ -14,11 +14,24 @@ function initialize() {
   getAllActiveUsersLatLng()
   setInterval(getAllActiveUsersLatLng, 30000);
   setUserActive();
+  activateSocketIO();
+}
+
+function activateSocketIO() {
+  var socket = io.connect('http://salty-shore-2311.herokuapp.com:80')
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg){
+    $('#messages').append($('<li>').text(msg));
+  });
 }
 
 function setUserActive(){
   $.ajax({
-    type: "POST",
+    type: "POST hehe",
     url: "/"
   });
 }

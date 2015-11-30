@@ -4,6 +4,7 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?keyAIzaSyAB6DLyolHXse5MgXizQzyd4JxGeKUk14U&callback"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="scripts/map.js"></script>
     <script src="bootstrap/js/jquery.js"></script>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" type="text/css">
@@ -55,6 +56,12 @@
                           <li>John</li>
                           <li>Winnie</li> -->
                       </ul>
+                  </div>
+                  <div id="messagesParent">
+                    <ul id="messages"></ul>
+                    <form action="">
+                      <input id="m" autocomplete="off"/><button>Send</button>
+                    </form>
                   </div>
               </div>
           </div>
