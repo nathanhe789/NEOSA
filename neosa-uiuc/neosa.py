@@ -30,27 +30,27 @@ def createUser(user,username, major, first_name, last_name, email_address):
 
 def getAllUsersLatLng():
     keys = UserModel.query().fetch(keys_only=True)
-    userLatLngTupleArray = []
+    userInfoArray = []
     for key in keys:
         user = key.get()
-        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
-    return userLatLngTupleArray
+        userInfoArray.append({"user_id":str(user.user_id), "latlng": user.latlng, "username": user.username})
+    return userInfoArray
 
 def getAllOtherActiveUsersLatLng():
     user = users.get_current_user()
     keys = UserModel.query(UserModel.isActive == True, UserModel.user_id != user.user_id()).fetch(keys_only=True)
-    userLatLngTupleArray = []
+    userInfoArray = []
     for key in keys:
         user = key.get()
-        userLatLngTupleArray.append({"user_id":str(user.user_id), "latlng": user.latlng})
-    return userLatLngTupleArray
+        userInfoArray.append({"user_id":str(user.user_id), "latlng": user.latlng, "username": user.username, "subject": user.subject})
+    return userInfoArray
 
-def setCurretUserActive():
+def setCurrentUserActive():
     user = getCurrentUser().get()
     user.isActive = True
     user.put()
 
-def setCurretUserInactive():
+def setCurrentUserInactive():
     user = getCurrentUser().get()
     user.isActive = False
     user.put()

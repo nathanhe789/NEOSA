@@ -49,14 +49,15 @@ class MainHandler(webapp2.RequestHandler):
             template = jinja_environment.get_template('templates/index0.html')
             self.response.out.write(template.render(current_user))
     def post(self):
-        setCurretUserActive()
+        setCurrentUserActive()
 
 class MapHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        template = jinja_environment.get_template('templates/map.html')
         if user:
-            self.response.out.write(template.render())
+            template = jinja_environment.get_template('templates/map.html')
+            username = getCurrentUser().get().username
+            self.response.out.write(template.render({"username": username}))
         else:
             self.redirect('/login')
     def post(self):
@@ -72,12 +73,12 @@ class MapHandler(webapp2.RequestHandler):
 class UsersHandler(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json';
-        obj = {'latlngArray': getAllOtherActiveUsersLatLng()}
+        obj = {'userInfoArray': getAllOtherActiveUsersLatLng()}
         self.response.out.write(json.dumps(obj))
 
 class LogoutHandler(webapp2.RequestHandler):
     def get(self):
-        setCurretUserInactive()
+        setCurrentUserInactive()
         self.redirect(users.create_logout_url('/'))
 
 class LoginHandler(webapp2.RequestHandler):
