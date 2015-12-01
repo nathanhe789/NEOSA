@@ -13,6 +13,7 @@ class UserModel(ndb.Model):
     subject = ndb.StringProperty()
     schedule = ndb.DateTimeProperty(repeated = True)
     isActive = ndb.BooleanProperty()
+    friends = ndb.PickleProperty(repeated = True)
 
 def getCurrentUser():
     key = False
@@ -53,3 +54,14 @@ def setCurretUserInactive():
     user = getCurrentUser().get()
     user.isActive = False
     user.put()
+
+def addFriend(username):
+    other = UserModel.query(UserModel.username == username).fetch(keys_only = True)
+    user = getCurrentUser().get()
+    if(len(other) > 0 and other not in user.friends):
+        user.friends.append(other[0])
+        user.put()
+
+def getFriends():
+    user = getCurrentUser().get()
+    return user.friends

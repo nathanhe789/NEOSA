@@ -28,9 +28,11 @@ jinja_environment = jinja2.Environment(
 
 class Test(webapp2.RequestHandler):
     def get(self):
+        addFriend("GeneralOnesill")
         user = getCurrentUser().get()
-        for date in user.schedule:
-            self.response.out.write('%s --- ' %(date))
+        for friend in user.friends:
+            self.response.out.write('%s --- ' %(friend))
+        self.response.out.write(getFriends())
         # template = jinja_environment.get_template('templates/subject.html')
         # self.response.out.write(template.render())
 class MainHandler(webapp2.RequestHandler):
