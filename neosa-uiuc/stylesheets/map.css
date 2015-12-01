@@ -1,16 +1,59 @@
-/*author Joe Tan*/
-html, body { height: 100%; margin: 0; padding: 0; }
-#map { height: 100%; width: 75%; float: left; margin-right:;}
-#portfolio{float: right; width: 25%; height: 100%;}
-#portfolioRow{width: auto;}
-#friendsHeader{width: auto; text-align: center;}
-#friendsHeader2{margin-top: -75px;}
-.friendsList{text-align: center; list-style-type:none; }
-li{}
+/*author Joe Tan and Jonathan Reynolds*/
 
-#messagesParent form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-#messagesParent form input { border: 0; padding: 10px; width: 90%; margin:0; margin-right: .5%; }
-#messagesParent form button { margin:0; width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-#messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    height: calc(100% - 50px);
+    width: 75%;
+    float: left;
+    margin-right: ;
+}
+/*#portfolio {
+    float: right;
+    width: 25%;
+    height: 100%;
+}
+#portfolioRow {
+    width: auto;
+}
+#friendsHeader {
+    width: auto;
+    text-align: center;
+}
+#friendsHeader2 {
+    margin-top: -75px;
+}
+.friendsList {
+    text-align: center;
+    list-style-type: none;
+}*/
+li {} #messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#messagesParent {
+    height: calc(100% - 43px - 50px);
+}
+#messages li {
+    padding: 5px 10px;
+    overflow-wrap: break-word;
+}
+#messages li:nth-child(odd) {
+    background: #eee;
+}
+#messagesContainer {
+    height: 100%;
+}
+#messagesParent ul {
+  height: calc(100% - 26px);
+  overflow-y: scroll;
+}
+.no-overflow {
+    overflow: hidden;
+}
