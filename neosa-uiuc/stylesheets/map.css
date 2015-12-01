@@ -32,13 +32,15 @@ body {
     text-align: center;
     list-style-type: none;
 }*/
-li {} #messages {
+#messages {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    height: calc(100% - 26px);
+    overflow-y: scroll;
 }
 #messagesParent {
-    height: calc(100% - 43px - 50px);
+    height: calc(100% - 110px);
 }
 #messages li {
     padding: 5px 10px;
@@ -50,9 +52,9 @@ li {} #messages {
 #messagesContainer {
     height: 100%;
 }
-#messagesParent ul {
-  height: calc(100% - 26px);
-  overflow-y: scroll;
+
+#messagesParent input{
+    width: 100%;
 }
 .no-overflow {
     overflow: hidden;
