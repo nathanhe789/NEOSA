@@ -31,7 +31,7 @@ function activateSocketIO() {
 
 function setUserActive(){
   $.ajax({
-    type: "POST hehe",
+    type: "POST",
     url: "/"
   });
 }

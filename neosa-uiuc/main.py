@@ -54,8 +54,7 @@ class MapHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         template = jinja_environment.get_template('templates/map.html')
         if user:
-            latlng = {'latlng':json.dumps(getAllUsersLatLng())}
-            self.response.out.write(template.render(latlng))
+            self.response.out.write(template.render())
         else:
             self.redirect('/login')
     def post(self):
@@ -76,6 +75,7 @@ class UsersHandler(webapp2.RequestHandler):
 
 class LogoutHandler(webapp2.RequestHandler):
     def get(self):
+        setCurretUserInactive()
         self.redirect(users.create_logout_url('/'))
 
 class LoginHandler(webapp2.RequestHandler):
