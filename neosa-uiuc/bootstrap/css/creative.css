@@ -16,7 +16,7 @@ body {
 
 hr {
     max-width: 50px;
-    border-color: #2d4fab;
+    border-color: #e97770;
     border-width: 3px;
 }
 
@@ -25,7 +25,7 @@ hr.light {
 }
 
 a {
-    color: #2d4fab;
+    color: #e97770;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -52,7 +52,7 @@ p {
 }
 
 .bg-primary {
-    background-color: #2d4fab;
+    background-color: #e97770;
 }
 
 .bg-dark {
@@ -89,7 +89,7 @@ aside {
     text-transform: uppercase;
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
     font-weight: 700;
-    color: #2d4fab;
+    color: #e97770;
 }
 
 .navbar-default .navbar-header .navbar-brand:hover,
@@ -107,12 +107,12 @@ aside {
 
 .navbar-default .nav > li>a:hover,
 .navbar-default .nav>li>a:focus:hover {
-    color: #2d4fab;
+    color: #e97770;
 }
 
 .navbar-default .nav > li.active>a,
 .navbar-default .nav>li.active>a:focus {
-    color: #2d4fab!important;
+    color: #e97770!important;
     background-color: transparent;
 }
 
@@ -153,7 +153,7 @@ aside {
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 14px;
-        color: #2d4fab;
+        color: #e97770;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
@@ -168,7 +168,7 @@ aside {
 
     .navbar-default.affix .nav > li>a:hover,
     .navbar-default.affix .nav>li>a:focus:hover {
-        color: #2d4fab;
+        color: #e97770;
     }
 }
 
@@ -323,7 +323,7 @@ header .header-content .header-content-inner p {
 }
 
 .text-primary {
-    color: #2d4fab;
+    color: #e97770;
 }
 
 .no-gutter > [class*=col-] {
@@ -385,9 +385,9 @@ fieldset[disabled] .btn-default.active {
 }
 
 .btn-primary {
-    border-color: #2d4fab;
+    border-color: #e97770;
     color: #fff;
-    background-color: #2d4fab;
+    background-color: #e97770;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -428,12 +428,12 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-    border-color: #2d4fab;
-    background-color: #2d4fab;
+    border-color: #e97770;
+    background-color: #e97770;
 }
 
 .btn-primary .badge {
-    color: #2d4fab;
+    color: #e97770;
     background-color: #fff;
 }
 
