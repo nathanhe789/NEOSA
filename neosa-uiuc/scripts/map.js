@@ -1,7 +1,7 @@
 // author Joe Tan & Jonathan Reynolds
 var map;
 var current_location;
-var user_name;
+var currentUsername;
 var marker;
 var userMarkers = {};
 
@@ -10,6 +10,7 @@ function initialize() {
     center: {lat: 0, lng: 0},
     zoom: 15
   });
+  setUsernameStyles();
   initCenterMapButton();
   getUserLocation();
   getAllActiveUsersLatLng()
@@ -18,15 +19,31 @@ function initialize() {
   activateSocketIO();
 }
 
+function setUsernameStyles(){
+  currentUsername = $('#username').html();
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = 'li.' + currentUsername + " {text-align:right; background-color: rgb(123, 213, 237)!important;}";
+  document.getElementsByTagName('head')[0].appendChild(style);
+}
+
+function formatChatMessage(msg, username){
+  var htmlString = "";
+  htmlString+= "<p class = \"username\">"+ username + "</p>";
+  htmlString += "<p>" + msg + "</p>";
+  return htmlString;
+}
+
 function activateSocketIO() {
   var socket = io.connect('http://salty-shore-2311.herokuapp.com:80')
   $('form').submit(function(){
-    socket.emit('chat message', $('#m').val(), $('#username').html());
+    socket.emit('chat message', $('#m').val(), currentUsername);
     $('#m').val('');
     return false;
   });
   socket.on('chat message', function(msg, username){
-    $('#messages').append($('<li>').text(username+": "+ msg));
+    var innerHTMLofMessage = formatChatMessage(msg,username);
+    $('#messages').append($('<li>').addClass(username).html(innerHTMLofMessage));
   });
 }
 
@@ -215,7 +232,7 @@ function CenterControl(controlDiv, map) {
   controlText.innerHTML = 'Center Map';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to Chicago.
+  // Setup the click event listeners:
   controlUI.addEventListener('click', function() {
     map.setCenter(marker.getPosition());
   });

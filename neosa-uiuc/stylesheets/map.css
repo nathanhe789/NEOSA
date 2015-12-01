@@ -49,6 +49,13 @@ body {
 #messages li:nth-child(odd) {
     background: #eee;
 }
+#messages li * {
+  padding: 0;
+  margin: 0;
+}
+#messages li .username {
+  font-weight: bold;
+}
 #messagesContainer {
     height: 100%;
 }
