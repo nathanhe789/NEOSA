@@ -45,6 +45,11 @@ function activateSocketIO() {
     var innerHTMLofMessage = formatChatMessage(msg,username);
     $('#messages').append($('<li>').addClass(username).html(innerHTMLofMessage));
   });
+  $('#messages').bind("DOMSubtreeModified",function(){
+    $('#messages').stop().animate({
+      scrollTop: $("#messages")[0].scrollHeight
+    }, 800);
+  });
 }
 
 function setUserActive(){
