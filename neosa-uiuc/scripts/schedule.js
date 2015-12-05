@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 
 
-
+//schedule handler implemented in profile page and schedule page
 
   var isMouseDown = false;
   $("#our_table td").mousedown(function () {
