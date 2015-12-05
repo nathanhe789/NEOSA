@@ -1,4 +1,4 @@
-// author Joe Tan & Jonathan Reynolds
+// author Joe Tan & Jonathan Reynolds & Vikrant Sharma
 var map;
 var current_location;
 var currentUsername;
@@ -48,7 +48,7 @@ function formatChatMessage(msg, username){
   htmlString+= "<p class = \"username\">"+ username + "</p>";
   htmlString += "<p>" + msg + "</p>";
   return htmlString;
-}
+}//updates the users location so there isnt a static pin
 
 /**
  * Connect to remote SocketIO client for chat handling.
@@ -70,7 +70,7 @@ function activateSocketIO() {
     }, 800);
   });
 }
-
+//connects to the chat handler 
 /**
  * POST to the backend to update the current User's status.
  */

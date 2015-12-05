@@ -57,7 +57,7 @@ function listUpcomingEvents() {
     'maxResults': 100,
     'orderBy': 'startTime'
   });
-
+// prints a summary of the user's calender, organizes events and prints error message if no events found
   request.execute(function(resp) {
     var events = resp.items;
     appendPre('Upcoming events:');
@@ -74,7 +74,7 @@ function listUpcomingEvents() {
     } else {
       appendPre('No upcoming events found.');
     }
-
+//summarizes users events
   });
 }
 
