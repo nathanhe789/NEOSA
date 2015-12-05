@@ -44,7 +44,7 @@ h5,
 h6 {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
 }
-
+/*font and color information*/
 p {
     margin-bottom: 20px;
     font-size: 16px;
@@ -185,7 +185,7 @@ header {
     background-size: cover;
     -o-background-size: cover;
 }
-
+/*header and structural information*/
 header .header-content {
     position: relative;
     width: 100%;
@@ -279,7 +279,7 @@ header .header-content .header-content-inner p {
     -moz-transition: all .35s;
     transition: all .35s;
 }
-
+/*layout of the different pages*/
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content {
     position: absolute;
     top: 50%;
@@ -470,7 +470,7 @@ img::-moz-selection {
     color: #fff;
     background: 0 0;
 }
-
+/*opacity and color schematic*/
 body {
     webkit-tap-highlight-color: #222;
 }
