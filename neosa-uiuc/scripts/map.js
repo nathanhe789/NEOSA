@@ -5,6 +5,9 @@ var currentUsername;
 var marker;
 var userMarkers = {};
 
+/**
+ * Run any methods needed to initialize the DOM
+ */
 function initialize() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
@@ -19,6 +22,9 @@ function initialize() {
   activateSocketIO();
 }
 
+/**
+ * Create and add styles to the page for the current logged-in user.
+ */
 function setUsernameStyles(){
   currentUsername = $('#username').html();
   var style = document.createElement('style');
@@ -27,6 +33,16 @@ function setUsernameStyles(){
   document.getElementsByTagName('head')[0].appendChild(style);
 }
 
+/**
+ * Takes a message and user as an argument and returns an HTML
+ * representation of the message to be used on the page.
+ * @param {String} msg
+ *    Message sent by current user
+ * @param {String} username
+ *    Username of current user
+ * @returns {String}
+ *    HTML formatted representation of user's message.
+ */
 function formatChatMessage(msg, username){
   var htmlString = "";
   htmlString+= "<p class = \"username\">"+ username + "</p>";
@@ -34,6 +50,9 @@ function formatChatMessage(msg, username){
   return htmlString;
 }
 
+/**
+ * Connect to remote SocketIO client for chat handling.
+ */
 function activateSocketIO() {
   var socket = io.connect('http://salty-shore-2311.herokuapp.com:80')
   $('form').submit(function(){
@@ -52,6 +71,9 @@ function activateSocketIO() {
   });
 }
 
+/**
+ * POST to the backend to update the current User's status.
+ */
 function setUserActive(){
   $.ajax({
     type: "POST",
@@ -59,6 +81,9 @@ function setUserActive(){
   });
 }
 
+/**
+ * Try to initialize Google Map API's geolocation functionality.
+ */
 function getUserLocation() {
   if (navigator.geolocation){
     /*
@@ -77,6 +102,11 @@ function getUserLocation() {
     document.getElementById("locationData").innerHTML = "Sorry - your browser doesn't support geolocation!";
 }
 
+/**
+ * Set location on map.
+ * @param {JSON} position
+ *    Object containing user's position data.
+ */
 function setLocation(position) {
 
   var lat = position.coords.latitude
@@ -85,7 +115,7 @@ function setLocation(position) {
   var blob = JSON.stringify(positionData);
   //If the marker has already been created
   if(marker != null){
-    //update the position
+    //update the position of the marker
     updateMarker(positionData);
   }
   else{
@@ -113,6 +143,11 @@ function setLocation(position) {
   });
 }
 
+/**
+ * Create a new marker on the map.
+ * @param {JSON} latLng
+ *    Object containing latitude and longitude.
+ */
 function createMarker(latLng) {
   var pinColor = "1aff1a";
   var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
@@ -128,11 +163,18 @@ function createMarker(latLng) {
   });
 }
 
+/**
+ * Update marker's position on the map.
+ * @param {JSON} latLng
+ *    Object containing lat and lang properties.
+ */
 function updateMarker(latLng) {
   marker.setPosition(latLng);
 }
 
-
+/**
+ * Make a GET request for Active users lat/lng data objects
+ */
 function getAllActiveUsersLatLng(){
   jQuery.ajax({
     type: 'GET',
@@ -147,6 +189,12 @@ function getAllActiveUsersLatLng(){
   });
 }
 
+/**
+ * For each user in an array of user information objects,
+ * create or update the marker for the respective user.
+ * @param {Array<JSON>} userInfoArray
+ *    An array of user information JSON objects
+ */
 function setUsersPositions(userInfoArray){
   for(var i = 0; i < userInfoArray.length; i = i + 1){
     //if the userMarkers dict already has this user
@@ -161,6 +209,11 @@ function setUsersPositions(userInfoArray){
   }
 }
 
+/**
+ * Create marker for users other than current user.
+ * @param {JSON} object
+ *    JSON object containing relevant user information.
+ */
 function createUsersMarker(object){
   var latLng = object.latlng;
   var userId = object.user_id;
@@ -190,7 +243,7 @@ function createUsersMarker(object){
   infoWindow.open(map, userMarker);
 
   userMarker.addListener('click', function() {
-    infoWindow.open(map, marker);
+    infoWindow.open(map, userMarker);
   });
 
   userMarkers[username] = {"marker": userMarker};
@@ -198,6 +251,12 @@ function createUsersMarker(object){
   console.log(userMarkers);
 }
 
+
+/**
+ * Update marker for users other than current user.
+ * @param {JSON} object
+ *    JSON object containing relevant user information.
+ */
 function updateUserMarker(object) {
     var latLng = object.latlng;
     var userId = object.user_id;
@@ -210,7 +269,6 @@ function updateUserMarker(object) {
 /**
  * The CenterControl adds a control to the map that recenters the map on a given location.
  * This constructor takes the control DIV as an argument.
- * @constructor
  */
 function CenterControl(controlDiv, map) {
 
@@ -244,6 +302,10 @@ function CenterControl(controlDiv, map) {
 
 }
 
+/**
+ * Initializes the button on the map to center the map on the
+ * logged in user's position.
+ */
 function initCenterMapButton() {
 
   // Create the DIV to hold the control and call the CenterControl() constructor
