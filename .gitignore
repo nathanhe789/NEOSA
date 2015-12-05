@@ -2,4 +2,5 @@
 *.pyc
 */*.pyc
 neosa-uiuc/*.pyc
-node_modules
+/neosa-uiuc/*.pyc
+/*.pyc
