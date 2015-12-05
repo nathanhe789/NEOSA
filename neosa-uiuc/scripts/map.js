@@ -1,19 +1,55 @@
 // author Joe Tan & Jonathan Reynolds
 var map;
 var current_location;
+var currentUsername;
 var marker;
-var userMarkers={};
+var userMarkers = {};
 
 function initialize() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 0, lng: 0},
     zoom: 15
   });
+  setUsernameStyles();
   initCenterMapButton();
   getUserLocation();
   getAllActiveUsersLatLng()
   setInterval(getAllActiveUsersLatLng, 30000);
   setUserActive();
+  activateSocketIO();
+}
+
+function setUsernameStyles(){
+  currentUsername = $('#username').html();
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = 'li.' + currentUsername + " {text-align:right; background-color: rgb(123, 213, 237)!important;}";
+  document.getElementsByTagName('head')[0].appendChild(style);
+}
+
+function formatChatMessage(msg, username){
+  var htmlString = "";
+  htmlString+= "<p class = \"username\">"+ username + "</p>";
+  htmlString += "<p>" + msg + "</p>";
+  return htmlString;
+}
+
+function activateSocketIO() {
+  var socket = io.connect('http://salty-shore-2311.herokuapp.com:80')
+  $('form').submit(function(){
+    socket.emit('chat message', $('#m').val(), currentUsername);
+    $('#m').val('');
+    return false;
+  });
+  socket.on('chat message', function(msg, username){
+    var innerHTMLofMessage = formatChatMessage(msg,username);
+    $('#messages').append($('<li>').addClass(username).html(innerHTMLofMessage));
+  });
+  $('#messages').bind("DOMSubtreeModified",function(){
+    $('#messages').stop().animate({
+      scrollTop: $("#messages")[0].scrollHeight
+    }, 800);
+  });
 }
 
 function setUserActive(){
@@ -103,7 +139,7 @@ function getAllActiveUsersLatLng(){
     url: "/users",
     success:
     function(data){
-      setUsersPositions(data.latlngArray);
+      setUsersPositions(data.userInfoArray);
     },
     error:
     function(data){
@@ -111,16 +147,16 @@ function getAllActiveUsersLatLng(){
   });
 }
 
-function setUsersPositions(latlngArray){
-  for(var i = 0; i < latlngArray.length; i = i + 1){
+function setUsersPositions(userInfoArray){
+  for(var i = 0; i < userInfoArray.length; i = i + 1){
     //if the userMarkers dict already has this user
-    if(userMarkers.hasOwnProperty(latlngArray[i].user_id)){
+    if(userMarkers.hasOwnProperty(userInfoArray[i].username)){
       //update their marker
-      updateUserMarker(latlngArray[i]);
+      updateUserMarker(userInfoArray[i]);
     }
     //otherwise, create a new marker.
     else {
-      createUsersMarker(latlngArray[i]);
+      createUsersMarker(userInfoArray[i]);
     }
   }
 }
@@ -128,30 +164,47 @@ function setUsersPositions(latlngArray){
 function createUsersMarker(object){
   var latLng = object.latlng;
   var userId = object.user_id;
+  var username = object.username;
+  var userSubject = object.subject;
   var pinColor = "FE7569";
-    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-      new google.maps.Size(21, 34),
-      new google.maps.Point(0,0),
-      new google.maps.Point(10, 34));
+  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+    new google.maps.Size(21, 34),
+    new google.maps.Point(0,0),
+    new google.maps.Point(10, 34));
 
-    var userMarker = new google.maps.Marker({
-      map: map,
-      position: latLng,
-      icon: pinImage,
-      title: 'User: ' +userId
-    });
-//
-  userMarkers[userId] = {"marker": userMarker};
-  console.log("Creating marker for user: " + userId + "'s location.'");
+  var contentString = '<div id="content">'+
+    '<h4>' + username + '</h4>' +
+    '<p>Wants to study: '+ userSubject + '.</p>' +
+    '</div>';
+  var infoWindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  var userMarker = new google.maps.Marker({
+    map: map,
+    position: latLng,
+    icon: pinImage,
+    title: 'User: ' + username
+  });
+
+  infoWindow.open(map, userMarker);
+
+  userMarker.addListener('click', function() {
+    infoWindow.open(map, marker);
+  });
+
+  userMarkers[username] = {"marker": userMarker};
+  console.log("Creating marker for user: " + username + "'s location.'");
   console.log(userMarkers);
 }
 
 function updateUserMarker(object) {
     var latLng = object.latlng;
     var userId = object.user_id;
-    var userMarker = userMarkers[userId]["marker"];
+    var username = object.username;
+    var userMarker = userMarkers[username]["marker"];
     userMarker.setPosition(latLng);
-    console.log("Updating user: " + userId + "'s location.'");
+    console.log("Updating user: " + username + "'s location.'");
 }
 
 /**
@@ -184,7 +237,7 @@ function CenterControl(controlDiv, map) {
   controlText.innerHTML = 'Center Map';
   controlUI.appendChild(controlText);
 
-  // Setup the click event listeners: simply set the map to Chicago.
+  // Setup the click event listeners:
   controlUI.addEventListener('click', function() {
     map.setCenter(marker.getPosition());
   });

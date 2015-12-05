@@ -15,6 +15,7 @@ class UserModel(ndb.Model):
     subject = ndb.StringProperty()
     schedule = ndb.DateTimeProperty(repeated = True)
     isActive = ndb.BooleanProperty()
+    friends = ndb.PickleProperty(repeated = True)
 
 # returns the unique key for the current user acessing the site
 # key and ids are very different things
@@ -45,7 +46,7 @@ def createUser(user,username, major, first_name, last_name, email_address):
 def getAllUsersLatLng():
     # search the data base for all users
     keys = UserModel.query().fetch(keys_only=True)
-    userLatLngTupleArray = []
+    userInfoArray = []
     for key in keys:
         user = key.get()
         # stores the latlng in a dictionary with the user id as key and latlng as the value
@@ -58,7 +59,7 @@ def getAllOtherActiveUsersLatLng():
     # searches the database with active users
     # and return their unique keyss
     keys = UserModel.query(UserModel.isActive == True, UserModel.user_id != user.user_id()).fetch(keys_only=True)
-    userLatLngTupleArray = []
+    userInfoArray = []
     for key in keys:
         user = key.get()
         # adds the user to a dictionary, using id as the key, and the key as the value
@@ -80,3 +81,14 @@ def setCurretUserInactive():
     # changes the user's isActive propertie to false
     user.isActive = False
     user.put()
+
+def addFriend(username):
+    other = UserModel.query(UserModel.username == username).fetch(keys_only = True)
+    user = getCurrentUser().get()
+    if(len(other) > 0 and other not in user.friends):
+        user.friends.append(other[0])
+        user.put()
+
+def getFriends():
+    user = getCurrentUser().get()
+    return user.friends
